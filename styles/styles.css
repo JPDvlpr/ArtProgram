@@ -30,3 +30,7 @@
 #toolbar-edits {
     -fx-spacing: 4px;
 }
+
+.Canvas{
+    -fx-background-color: red;
+}

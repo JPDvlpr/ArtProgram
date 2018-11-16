@@ -1,9 +1,11 @@
 package view;
 
+import controller.ArtController;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
@@ -12,6 +14,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.LineModel;
+import model.Oval;
+import model.Point;
 
 public class ArtView extends Application {
     public static final int WIN_WIDTH = 1000;
@@ -21,28 +26,47 @@ public class ArtView extends Application {
     public static final int MIN_STROKE = 1;
 
     //drawing on the canvas
-    private Canvas canvas;
+//    private Canvas canvas = new Canvas(300, 250);
+    private Canvas canvas = new Canvas(WIN_WIDTH, WIN_HEIGHT);
 
     //selecting shapes
     private ToggleGroup shapeGroup;
 
     //shape settings
+    private Oval oval;
+    private LineModel line;
+    //private RectangleModel rect;
+
     private ColorPicker fillColorPicker = new ColorPicker();
     private ColorPicker strokeColorPicker = new ColorPicker();
     private Slider strokeSlider;
     private CheckBox filledCheckbox;
+    private double xbegin = 0;
+    private double ybegin = 0;
+    private double xend = 0;
+    private double yend = 0;
+    ArtController controller = new ArtController();
 
-    //GraphicsContext graphics = myCanvas.getGraphicsContext2D();
+    private GraphicsContext graphics;
+    //= canvas.getGraphicsContext2D();
 
     @Override
     public void start(Stage stage) {
         stage.setTitle("Doodle Program");
         stage.setScene(getPrimaryScene());
         stage.show();
+
+        //drawShapes(graphics);
+        graphics = canvas.getGraphicsContext2D();
+        graphics.setStroke(Color.BLUE);
+        graphics.setLineWidth(5);
+
+
     }
 
     private Scene getPrimaryScene() {
         BorderPane mainPanel = new BorderPane();
+        //mainPanel.setStyle("-fx-border: red solid 2px");
 
         VBox top = new VBox();
         top.getChildren().addAll(buildMenu(), getToolbar());
@@ -50,11 +74,87 @@ public class ArtView extends Application {
         //set the primary regions
         mainPanel.setTop(top);
         mainPanel.setCenter(getCanvas());
+        //mainPanel.setBottom(getCanvas());
 
         Scene scene = new Scene(mainPanel, WIN_WIDTH, WIN_HEIGHT);
+
         scene.getStylesheets().add("styles.css");
 
+
+        canvas.setOnMousePressed(e -> {
+             xbegin = e.getX();
+             ybegin = e.getY();
+            //line
+            //graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//            graphics.beginPath();
+
+//            graphics.beginPath();
+//            graphics.lineTo(xbegin, ybegin);
+//            graphics.stroke();
+
+            //oval
+            graphics.beginPath();
+
+//            graphics.beginPath();
+//            graphics.closePath();
+            //graphics.stroke();
+
+            //rectangle
+            //graphics.beginPath();
+
+            // squiggle
+//            graphics.beginPath();
+//            graphics.lineTo(e.getX(), e.getY());
+//            graphics.stroke();
+        });
+
+        canvas.setOnMouseDragged(e -> {
+            //Line
+//            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//            graphics.lineTo(0, e.getY());
+//            graphics.strokeLine(0,0, e.getX(), e.getY());
+
+            //oval
+            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+//            graphics.setStroke(Color.WHITE);
+//            graphics.strokeOval(xbegin, ybegin, 10,10);
+
+            xend = e.getX();
+            yend = e.getY();
+            Point point1 = new Point(xbegin,ybegin);
+            Point point2 = new Point(xend, yend);
+
+            controller.handleAddShape(Color.BLUE, point1, point2);
+            controller.viewShapes(graphics);
+            controller.removeLastShape();
+
+            //rectangle
+//            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//            graphics.strokeRect(0,0,e.getX(),e.getY());
+
+            //squiggle
+            //graphics.lineTo(e.getX(), e.getY());
+            //graphics.stroke();
+        });
+
+        canvas.setOnMouseReleased(e -> {
+            Point point1 = new Point(xbegin,ybegin);
+            Point point2 = new Point(xend, yend);
+
+            controller.handleAddShape(Color.BLUE, point1, point2);
+            controller.viewShapes(graphics);
+
+            graphics.closePath();
+        });
+
+        //mainPanel.getChildren().addAll(canvas);
+
         return scene;
+    }
+
+    private void drawShapes(GraphicsContext graphics) {
+        graphics.setFill(Color.GREEN);
     }
 
     private Parent getToolbar() {
@@ -153,6 +253,7 @@ public class ArtView extends Application {
     }
 
     private Parent getCanvas() {
+
         VBox box = new VBox();
 
         canvas = new Canvas();
@@ -206,7 +307,24 @@ public class ArtView extends Application {
 
         MenuItem clear = new MenuItem("Clear Shapes");
         draw.getItems().add(clear);
+
+        for (int i = 0; i < shapes.length; i++) {
+            String item = shapes[i].getText();
+            shapes[i].setOnAction(e -> {
+                System.out.println(item + " pressed");
+//                    switch (item) {
+//                        case "Line":
+//                            System.out.println("Line pressed");
+//                            break;
+//                        default:
+//                            System.out.println("not a line");
+//                            break;
+//                    }
+            });
+
+        }
     }
+
 
     private void help(Menu about) {
         MenuItem[] items = {new MenuItem("About")};
