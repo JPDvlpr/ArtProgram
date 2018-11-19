@@ -3,13 +3,13 @@ package model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class LineModel implements IShape {
+public class Line implements IShape {
 
     private Color color;
     private Point point1;
     private Point point2;
 
-    public LineModel(Color color, Point point1, Point point2) {
+    public Line(Color color, Point point1, Point point2) {
         this.color = color;
         this.point1 = point1;
         this.point2 = point2;

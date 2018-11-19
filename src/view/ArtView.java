@@ -2,6 +2,8 @@ package view;
 
 import controller.ArtController;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -14,7 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.LineModel;
+import model.Line;
 import model.Oval;
 import model.Point;
 
@@ -34,7 +36,7 @@ public class ArtView extends Application {
 
     //shape settings
     private Oval oval;
-    private LineModel line;
+    private Line line;
     //private RectangleModel rect;
 
     private ColorPicker fillColorPicker = new ColorPicker();
@@ -66,7 +68,6 @@ public class ArtView extends Application {
 
     private Scene getPrimaryScene() {
         BorderPane mainPanel = new BorderPane();
-        //mainPanel.setStyle("-fx-border: red solid 2px");
 
         VBox top = new VBox();
         top.getChildren().addAll(buildMenu(), getToolbar());
@@ -74,81 +75,11 @@ public class ArtView extends Application {
         //set the primary regions
         mainPanel.setTop(top);
         mainPanel.setCenter(getCanvas());
-        //mainPanel.setBottom(getCanvas());
 
         Scene scene = new Scene(mainPanel, WIN_WIDTH, WIN_HEIGHT);
 
         scene.getStylesheets().add("styles.css");
 
-
-        canvas.setOnMousePressed(e -> {
-             xbegin = e.getX();
-             ybegin = e.getY();
-            //line
-            //graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//            graphics.beginPath();
-
-//            graphics.beginPath();
-//            graphics.lineTo(xbegin, ybegin);
-//            graphics.stroke();
-
-            //oval
-            graphics.beginPath();
-
-//            graphics.beginPath();
-//            graphics.closePath();
-            //graphics.stroke();
-
-            //rectangle
-            //graphics.beginPath();
-
-            // squiggle
-//            graphics.beginPath();
-//            graphics.lineTo(e.getX(), e.getY());
-//            graphics.stroke();
-        });
-
-        canvas.setOnMouseDragged(e -> {
-            //Line
-//            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//            graphics.lineTo(0, e.getY());
-//            graphics.strokeLine(0,0, e.getX(), e.getY());
-
-            //oval
-            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-//            graphics.setStroke(Color.WHITE);
-//            graphics.strokeOval(xbegin, ybegin, 10,10);
-
-            xend = e.getX();
-            yend = e.getY();
-            Point point1 = new Point(xbegin,ybegin);
-            Point point2 = new Point(xend, yend);
-
-            controller.handleAddShape(Color.BLUE, point1, point2);
-            controller.viewShapes(graphics);
-            controller.removeLastShape();
-
-            //rectangle
-//            graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-//            graphics.strokeRect(0,0,e.getX(),e.getY());
-
-            //squiggle
-            //graphics.lineTo(e.getX(), e.getY());
-            //graphics.stroke();
-        });
-
-        canvas.setOnMouseReleased(e -> {
-            Point point1 = new Point(xbegin,ybegin);
-            Point point2 = new Point(xend, yend);
-
-            controller.handleAddShape(Color.BLUE, point1, point2);
-            controller.viewShapes(graphics);
-
-            graphics.closePath();
-        });
-
-        //mainPanel.getChildren().addAll(canvas);
 
         return scene;
     }
@@ -243,12 +174,145 @@ public class ArtView extends Application {
     private ToggleButton getImageToggleButton(String text) {
         ToggleButton result = new ToggleButton();
         result.setGraphic(getButtonIcon(text));
+
+        result.setOnAction(e -> {
+            //System.out.println(text + " pressed");
+            switch (text) {
+                case "Line":
+                    canvas.setOnMousePressed(c -> {
+                        xbegin = c.getX();
+                        ybegin = c.getY();
+                        //line
+                        //graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                        graphics.beginPath();
+                        graphics.lineTo(xbegin, ybegin);
+                        graphics.stroke();
+                    });
+
+                    canvas.setOnMouseDragged(c -> {
+                        //Line
+                        graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                        graphics.lineTo(c.getX(), c.getY());
+                        graphics.strokeLine(10, 10, c.getX(), c.getY());
+                    });
+
+                    canvas.setOnMouseReleased(c -> {
+//                        Point point1 = new Point(xbegin, ybegin);
+//                        Point point2 = new Point(xend, yend);
+//
+//                        controller.handleAddShape(Color.BLUE, point1, point2);
+//                        controller.viewShapes(graphics);
+//
+//                        graphics.closePath();
+                    });
+
+                    System.out.println(text + " pressed");
+                    break;
+                case "Oval":
+                    canvas.setOnMousePressed(c -> {
+                        xbegin = c.getX();
+                        ybegin = c.getY();
+                        //oval
+                        graphics.beginPath();
+                    });
+
+                    canvas.setOnMouseDragged(c -> {
+                        //oval
+                        graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+                        xend = c.getX();
+                        yend = c.getY();
+                        Point point1 = new Point(xbegin, ybegin);
+                        Point point2 = new Point(xend, yend);
+
+                        controller.handleAddShape(Color.BLUE, point1, point2);
+                        controller.viewShapes(graphics);
+                        controller.removeLastShape();
+                    });
+
+                    canvas.setOnMouseReleased(c -> {
+                        Point point1 = new Point(xbegin, ybegin);
+                        Point point2 = new Point(xend, yend);
+
+                        controller.handleAddShape(Color.BLUE, point1, point2);
+                        controller.viewShapes(graphics);
+
+                        graphics.closePath();
+                    });
+                    System.out.println(text + " pressed");
+                    break;
+                case "Rectangle":
+                    canvas.setOnMousePressed(c -> {
+                        xbegin = c.getX();
+                        ybegin = c.getY();
+
+                        //rectangle
+                        graphics.beginPath();
+                    });
+
+                    canvas.setOnMouseDragged(c -> {
+
+                        //rectangle
+                        graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                        graphics.strokeRect(0, 0, c.getX(), c.getY());
+
+                    });
+
+                    canvas.setOnMouseReleased(c -> {
+//                        Point point1 = new Point(xbegin, ybegin);
+//                        Point point2 = new Point(xend, yend);
+//
+//                        controller.handleAddShape(Color.BLUE, point1, point2);
+//                        controller.viewShapes(graphics);
+//
+//                        graphics.closePath();
+                    });
+
+                    System.out.println(text + " pressed");
+                    break;
+                case "Squiggle":
+                    canvas.setOnMousePressed(c -> {
+                        xbegin = c.getX();
+                        ybegin = c.getY();
+
+                        // squiggle
+                        graphics.beginPath();
+                        graphics.lineTo(c.getX(), c.getY());
+                        graphics.stroke();
+                    });
+
+                    canvas.setOnMouseDragged(c -> {
+
+                        //squiggle
+                        graphics.lineTo(c.getX(), c.getY());
+                        graphics.stroke();
+                    });
+
+                    canvas.setOnMouseReleased(c -> {
+//                        Point point1 = new Point(xbegin, ybegin);
+//                        Point point2 = new Point(xend, yend);
+//
+//                        controller.handleAddShape(Color.BLUE, point1, point2);
+//                        controller.viewShapes(graphics);
+//
+//                        graphics.closePath();
+                    });
+
+                    System.out.println(text + " pressed");
+                    break;
+                default:
+                    System.out.println("not a line");
+                    break;
+            }
+        });
         return result;
     }
 
     private Button getImageButton(String text) {
         Button result = new Button();
         result.setGraphic(getButtonIcon(text));
+
+
         return result;
     }
 
@@ -307,22 +371,6 @@ public class ArtView extends Application {
 
         MenuItem clear = new MenuItem("Clear Shapes");
         draw.getItems().add(clear);
-
-        for (int i = 0; i < shapes.length; i++) {
-            String item = shapes[i].getText();
-            shapes[i].setOnAction(e -> {
-                System.out.println(item + " pressed");
-//                    switch (item) {
-//                        case "Line":
-//                            System.out.println("Line pressed");
-//                            break;
-//                        default:
-//                            System.out.println("not a line");
-//                            break;
-//                    }
-            });
-
-        }
     }
 
 
