@@ -2,8 +2,6 @@ package view;
 
 import controller.ArtController;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -37,7 +35,7 @@ public class ArtView extends Application {
     //shape settings
     private Oval oval;
     private Line line;
-    //private RectangleModel rect;
+    //private model.RectangleModel rect;
 
     private ColorPicker fillColorPicker = new ColorPicker();
     private ColorPicker strokeColorPicker = new ColorPicker();
@@ -183,26 +181,36 @@ public class ArtView extends Application {
                         xbegin = c.getX();
                         ybegin = c.getY();
                         //line
-                        //graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                        graphics.beginPath();
-                        graphics.lineTo(xbegin, ybegin);
-                        graphics.stroke();
+                        //graphics.beginPath();
+                        //graphics.stroke();
                     });
 
                     canvas.setOnMouseDragged(c -> {
                         //Line
+
                         graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                        graphics.lineTo(c.getX(), c.getY());
-                        graphics.strokeLine(10, 10, c.getX(), c.getY());
+
+                        xend = c.getX();
+                        yend = c.getY();
+
+                        Point point1 = new Point(xbegin, ybegin);
+                        Point point2 = new Point(xend, yend);
+
+                        //graphics.strokeLine(xbegin,ybegin, xend, yend);
+
+                        controller.handleAddShape(text, Color.BLUE, point1, point2);
+                        controller.viewShapes(graphics);
+                        controller.removeLastShape();
                     });
 
                     canvas.setOnMouseReleased(c -> {
-//                        Point point1 = new Point(xbegin, ybegin);
-//                        Point point2 = new Point(xend, yend);
-//
-//                        controller.handleAddShape(Color.BLUE, point1, point2);
-//                        controller.viewShapes(graphics);
-//
+
+                        Point point1 = new Point(xbegin, ybegin);
+                        Point point2 = new Point(xend, yend);
+
+                        controller.handleAddShape(text, Color.RED, point1, point2);
+                        controller.viewShapes(graphics);
+
 //                        graphics.closePath();
                     });
 
@@ -225,7 +233,7 @@ public class ArtView extends Application {
                         Point point1 = new Point(xbegin, ybegin);
                         Point point2 = new Point(xend, yend);
 
-                        controller.handleAddShape(Color.BLUE, point1, point2);
+                        controller.handleAddShape(text, Color.BLUE, point1, point2);
                         controller.viewShapes(graphics);
                         controller.removeLastShape();
                     });
@@ -234,31 +242,35 @@ public class ArtView extends Application {
                         Point point1 = new Point(xbegin, ybegin);
                         Point point2 = new Point(xend, yend);
 
-                        controller.handleAddShape(Color.BLUE, point1, point2);
+                        controller.handleAddShape(text, Color.BLUE, point1, point2);
                         controller.viewShapes(graphics);
 
                         graphics.closePath();
                     });
                     System.out.println(text + " pressed");
                     break;
-                case "Rectangle":
-                    canvas.setOnMousePressed(c -> {
-                        xbegin = c.getX();
-                        ybegin = c.getY();
-
-                        //rectangle
-                        graphics.beginPath();
-                    });
-
-                    canvas.setOnMouseDragged(c -> {
-
-                        //rectangle
-                        graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                        graphics.strokeRect(0, 0, c.getX(), c.getY());
-
-                    });
-
-                    canvas.setOnMouseReleased(c -> {
+//                case "Rectangle":
+//                    canvas.setOnMousePressed(c -> {
+//                        xbegin = c.getX();
+//                        ybegin = c.getY();
+//
+//                        //rectangle
+//                        graphics.beginPath();
+//                    });
+//
+//                    canvas.setOnMouseDragged(c -> {
+//
+//                        //rectangle
+//                        graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//                        graphics.strokeRect(0, 0, c.getX(), c.getY());
+//
+//                        //controller.handleAddRect(Color.BLUE, , point2);
+//                        controller.viewShapes(graphics);
+//                        controller.removeLastShape();
+//
+//                    });
+//
+//                    canvas.setOnMouseReleased(c -> {
 //                        Point point1 = new Point(xbegin, ybegin);
 //                        Point point2 = new Point(xend, yend);
 //
@@ -266,36 +278,39 @@ public class ArtView extends Application {
 //                        controller.viewShapes(graphics);
 //
 //                        graphics.closePath();
-                    });
-
-                    System.out.println(text + " pressed");
-                    break;
+//                    });
+//
+//                    System.out.println(text + " pressed");
+//                    break;
                 case "Squiggle":
                     canvas.setOnMousePressed(c -> {
                         xbegin = c.getX();
                         ybegin = c.getY();
-
-                        // squiggle
-                        graphics.beginPath();
-                        graphics.lineTo(c.getX(), c.getY());
-                        graphics.stroke();
                     });
 
                     canvas.setOnMouseDragged(c -> {
 
                         //squiggle
-                        graphics.lineTo(c.getX(), c.getY());
-                        graphics.stroke();
+                        graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+                        xend = c.getX();
+                        yend = c.getY();
+                        Point point1 = new Point(xbegin, ybegin);
+                        Point point2 = new Point(xend, yend);
+
+                        controller.handleAddShape(text, Color.BLUE, point1, point2);
+                        controller.viewShapes(graphics);
+                        controller.removeLastShape();
                     });
 
                     canvas.setOnMouseReleased(c -> {
-//                        Point point1 = new Point(xbegin, ybegin);
-//                        Point point2 = new Point(xend, yend);
-//
-//                        controller.handleAddShape(Color.BLUE, point1, point2);
-//                        controller.viewShapes(graphics);
-//
-//                        graphics.closePath();
+                        graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+                        Point point1 = new Point(xbegin, ybegin);
+                        Point point2 = new Point(xend, yend);
+
+                        controller.handleAddShape(text, Color.GREEN, point1, point2);
+                        controller.viewShapes(graphics);
                     });
 
                     System.out.println(text + " pressed");
