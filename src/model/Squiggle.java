@@ -13,7 +13,7 @@ public class Squiggle implements IShape {
     private boolean filled;
 
     public Squiggle(Point point1, Point point2, Color fillColor,
-                Color strokeColor, double strokeWidth, boolean filled) {
+                    Color strokeColor, double strokeWidth, boolean filled) {
         this.point1 = point1;
         this.point2 = point2;
         this.fillColor = fillColor;
@@ -29,14 +29,21 @@ public class Squiggle implements IShape {
         double x2 = point2.getX();
         double y2 = point2.getY();
 
+        double xCoords[] = {};
+        double yCoords[] = {};
+        for (int i = 0; i < xCoords.length; i++) {
+            xCoords[i] += x;
+            yCoords[i] += y;
+        }
+
         graphics.setFill(fillColor);
         graphics.setStroke(strokeColor);
         graphics.setLineWidth(strokeWidth);
+
+        graphics.strokePolyline(xCoords, yCoords, 40);
         if (filled) {
             System.out.println("filled");
 //            graphics.fillPolygon(x, y, width, height);
         }
-        graphics.strokeLine(x,y,x2,y2);
-
     }
 }
