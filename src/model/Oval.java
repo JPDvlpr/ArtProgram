@@ -1,17 +1,25 @@
 package model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.paint.Color;
 
 public class Oval implements IShape {
-    private Color color;
     private Point point1;
     private Point point2;
+    private Color fillColor;
+    private Color strokeColor;
+    private double strokeWidth;
+    private boolean filled;
 
-    public Oval(Color color, Point point1, Point point2) {
-        this.color = color;
+    public Oval(Point point1, Point point2, Color fillColor,
+                Color strokeColor, double strokeWidth, boolean filled) {
         this.point1 = point1;
         this.point2 = point2;
+        this.fillColor = fillColor;
+        this.strokeColor = strokeColor;
+        this.strokeWidth = strokeWidth;
+        this.filled = filled;
     }
 
     @Override
@@ -36,8 +44,12 @@ public class Oval implements IShape {
         double width = point2.getX() - x;
         double height = point2.getY() - y;
 
-        graphics.setStroke(color);
-
-        graphics.strokeOval(x,y,width,height);
+        graphics.setFill(fillColor);
+        graphics.setStroke(strokeColor);
+        graphics.setLineWidth(strokeWidth);
+        graphics.strokeOval(x, y, width, height);
+        if (filled){
+            graphics.fillOval(x, y, width, height);
+        }
     }
 }
