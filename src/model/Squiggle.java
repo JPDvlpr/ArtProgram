@@ -5,29 +5,21 @@ import javafx.scene.paint.Color;
 
 public class Squiggle implements IShape {
 
-    private Color color;
+    private Color fillColor;
+    private Color strokeColor;
     private Point point1;
     private Point point2;
+    private double strokeWidth;
+    private boolean filled;
 
-    public Squiggle(Color color, Point point1, Point point2) {
-        this.color = color;
+    public Squiggle(Point point1, Point point2, Color fillColor,
+                Color strokeColor, double strokeWidth, boolean filled) {
         this.point1 = point1;
         this.point2 = point2;
-    }
-
-    @Override
-    public Color getColor(Color color) {
-        return color;
-    }
-
-    @Override
-    public Point getPointP1(Point point1) {
-        return point1;
-    }
-
-    @Override
-    public Point getPointP2(Point point2) {
-        return point2;
+        this.fillColor = fillColor;
+        this.strokeColor = strokeColor;
+        this.strokeWidth = strokeWidth;
+        this.filled = filled;
     }
 
     @Override
@@ -37,8 +29,14 @@ public class Squiggle implements IShape {
         double x2 = point2.getX();
         double y2 = point2.getY();
 
-        graphics.setStroke(color);
-
+        graphics.setFill(fillColor);
+        graphics.setStroke(strokeColor);
+        graphics.setLineWidth(strokeWidth);
+        if (filled) {
+            System.out.println("filled");
+//            graphics.fillPolygon(x, y, width, height);
+        }
         graphics.strokeLine(x,y,x2,y2);
+
     }
 }

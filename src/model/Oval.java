@@ -1,7 +1,6 @@
 package model;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.paint.Color;
 
 public class Oval implements IShape {
@@ -23,21 +22,6 @@ public class Oval implements IShape {
     }
 
     @Override
-    public Color getColor(Color color) {
-        return color;
-    }
-
-    @Override
-    public Point getPointP1(Point point1) {
-        return point1;
-    }
-
-    @Override
-    public Point getPointP2(Point point2) {
-        return point2;
-    }
-
-    @Override
     public void viewShape(GraphicsContext graphics) {
         double x = point1.getX();
         double y = point1.getY();
@@ -47,9 +31,9 @@ public class Oval implements IShape {
         graphics.setFill(fillColor);
         graphics.setStroke(strokeColor);
         graphics.setLineWidth(strokeWidth);
-        graphics.strokeOval(x, y, width, height);
-        if (filled){
+        if (filled) {
             graphics.fillOval(x, y, width, height);
         }
+        graphics.strokeOval(x, y, width, height);
     }
 }

@@ -5,29 +5,16 @@ import javafx.scene.paint.Color;
 
 public class Line implements IShape {
 
-    private Color color;
+    private Color strokeColor;
     private Point point1;
     private Point point2;
+    private double strokeWidth;
 
-    public Line(Color color, Point point1, Point point2) {
-        this.color = color;
+    public Line(Point point1, Point point2, Color strokeColor, double strokeWidth) {
         this.point1 = point1;
         this.point2 = point2;
-    }
-
-    @Override
-    public Color getColor(Color color) {
-        return color;
-    }
-
-    @Override
-    public Point getPointP1(Point point1) {
-        return point1;
-    }
-
-    @Override
-    public Point getPointP2(Point point2) {
-        return point2;
+        this.strokeColor = strokeColor;
+        this.strokeWidth = strokeWidth;
     }
 
     @Override
@@ -37,8 +24,8 @@ public class Line implements IShape {
         double x2 = point2.getX();
         double y2 = point2.getY();
 
-        graphics.setStroke(color);
-
+        graphics.setStroke(strokeColor);
+        graphics.setLineWidth(strokeWidth);
         graphics.strokeLine(x,y,x2,y2);
     }
 }
