@@ -19,11 +19,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.IShape;
 import model.Point;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 
 /**
  * TODO: Squiggle shape
@@ -36,6 +38,8 @@ public class ArtView extends Application {
     private static final int SHAPE_ICON_SIZE = 20;
     private static final int MAX_STROKE = 20;
     private static final int MIN_STROKE = 1;
+    public static final int UNDO = 0;
+    public static final int REDO = 1;
 
     //drawing on the canvas
     private Canvas canvas = new Canvas(WIN_WIDTH, WIN_HEIGHT);
@@ -50,8 +54,8 @@ public class ArtView extends Application {
     private double xend = 0;
     private double yend = 0;
     private ArtController controller = new ArtController();
-
     private GraphicsContext graphics;
+    private ArrayList<Point> point = new ArrayList<>();
 
     @Override
     public void start(Stage stage) {
@@ -151,17 +155,19 @@ public class ArtView extends Application {
         String[] edits = {"undo", "redo"};
         Button[] buttons = new Button[edits.length];
 
-        buttons[0] = getImageButton(edits[0]);
-        buttons[1] = getImageButton(edits[1]);
+        buttons[UNDO] = getImageButton(edits[UNDO]);
+        buttons[REDO] = getImageButton(edits[REDO]);
 
-        buttons[0].setOnAction(x -> {
-            //if (buttons[0].getText().equals("undo")) {
+        buttons[UNDO].setOnAction(x -> {
             System.out.println("undo pressed");
-            controller.removeLastShape();
+            controller.undo(graphics);
             graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
             controller.viewShapes(graphics);
         });
-        buttons[1].setOnAction(x -> System.out.println("redo pressed"));
+        buttons[REDO].setOnAction(x -> {
+                    controller.redoLastShape(graphics);
+                }
+        );
 
         editPanel.getChildren().
                 addAll(buttons);
@@ -182,36 +188,28 @@ public class ArtView extends Application {
         result.setOnAction(e -> {
 
             canvas.setOnMousePressed(c -> {
-                xbegin = c.getX();
-                ybegin = c.getY();
+
+                point.clear();
+                point.add(new Point(c.getX(), c.getY()));
             });
 
             canvas.setOnMouseDragged(c -> {
                 graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-                xend = c.getX();
-                yend = c.getY();
-                Point point1 = new Point(xbegin, ybegin);
-                Point point2 = new Point(xend, yend);
+                point.add(new Point(c.getX(), c.getY()));
 
-                //graphics.lineTo(c.getX(), c.getY());
-                // graphics.setStroke(Color.BLACK);
-                //graphics.stroke();
-
-                controller.handleAddShape(text, point1, point2, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
+                controller.handleAddShape(text, point, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
                 controller.viewShapes(graphics);
                 controller.removeLastShape();
             });
 
             canvas.setOnMouseReleased(c -> {
-                Point point1 = new Point(xbegin, ybegin);
-                Point point2 = new Point(xend, yend);
+                point.add(new Point(c.getX(), c.getY()));
 
-                controller.handleAddShape(text, point1, point2, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
+                controller.handleAddShape(text, point, fillColorPicker.getValue(), strokeColorPicker.getValue(), strokeSlider.getValue(), filledCheckbox.isSelected());
                 controller.viewShapes(graphics);
             });
         });
-
         return result;
     }
 
