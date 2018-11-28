@@ -3,6 +3,9 @@ package model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+/**
+ * Oval is one of four shapes used in this app
+ */
 public class Oval implements IShape {
     private Point point1;
     private Point point2;
@@ -11,6 +14,10 @@ public class Oval implements IShape {
     private double strokeWidth;
     private boolean filled;
 
+    /**
+     * creating the Oval constructor and setting the
+     * global vars to be the constructor vars
+     */
     public Oval(Point point1, Point point2, Color fillColor,
                 Color strokeColor, double strokeWidth, boolean filled) {
         this.point1 = point1;
@@ -21,6 +28,10 @@ public class Oval implements IShape {
         this.filled = filled;
     }
 
+    /**
+     * views the Oval shape using a set of points,
+     * a width, and a height
+     */
     @Override
     public void viewShape(GraphicsContext graphics) {
         double x = point1.getX();
@@ -31,9 +42,10 @@ public class Oval implements IShape {
         graphics.setFill(fillColor);
         graphics.setStroke(strokeColor);
         graphics.setLineWidth(strokeWidth);
+        graphics.strokeOval(x, y, width, height);
+
         if (filled) {
             graphics.fillOval(x, y, width, height);
         }
-        graphics.strokeOval(x, y, width, height);
     }
 }
