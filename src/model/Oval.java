@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 /**
  * Oval is one of four shapes used in this app
  */
-public class Oval implements IShape {
+public class Oval implements IShapeFacade {
     private Point point1;
     private Point point2;
     private Color fillColor;
@@ -42,6 +42,9 @@ public class Oval implements IShape {
         graphics.setFill(fillColor);
         graphics.setStroke(strokeColor);
         graphics.setLineWidth(strokeWidth);
+
+        
+
         graphics.strokeOval(x, y, width, height);
 
         if (filled) {

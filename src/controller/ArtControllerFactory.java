@@ -11,16 +11,17 @@ import java.util.Stack;
  * Controller that does the work from the view layer
  * to get passed to the model layer
  */
-public class ArtController {
+public class ArtControllerFactory {
 
-    private Stack<IShape> shapeList = new Stack<>();
-    private Stack<IShape> tempShapeList = new Stack<>();
+    private Stack<IShapeFacade> shapeList = new Stack<>();
+    private Stack<IShapeFacade> tempShapeList = new Stack<>();
 
     /**
-     * Adds a new shape to a stack of data type IShape
+     * Adds a new shape to a stack of data type IShapeFacade
      */
     public void handleAddShape(String text, ArrayList<Point> pointList, Color fillColor,
                                Color strokeColor, double strokeWidth, boolean filled) {
+        tempShapeList.clear();
         Point[] point = new Point[pointList.size()];
 
         for (int i = 0; i < pointList.size(); i++) {
@@ -28,19 +29,19 @@ public class ArtController {
         }
         switch (text) {
             case "Oval":
-                IShape oval = new Oval(point[0], point[point.length - 1], fillColor, strokeColor, strokeWidth, filled);
+                IShapeFacade oval = new Oval(point[0], point[point.length - 1], fillColor, strokeColor, strokeWidth, filled);
                 shapeList.add(oval);
                 break;
             case "Line":
-                IShape line = new Line(point[0], point[point.length - 1], strokeColor, strokeWidth);
+                IShapeFacade line = new Line(point[0], point[point.length - 1], strokeColor, strokeWidth);
                 shapeList.add(line);
                 break;
             case "Rectangle":
-                IShape rectangle = new Rectangle(point[0], point[point.length - 1], fillColor, strokeColor, strokeWidth, filled);
+                IShapeFacade rectangle = new Rectangle(point[0], point[point.length - 1], fillColor, strokeColor, strokeWidth, filled);
                 shapeList.add(rectangle);
                 break;
             case "Squiggle":
-                IShape squiggle = new Squiggle(point, fillColor, strokeColor, strokeWidth, filled);
+                IShapeFacade squiggle = new Squiggle(point, fillColor, strokeColor, strokeWidth, filled);
                 shapeList.add(squiggle);
                 break;
             default:
@@ -53,7 +54,7 @@ public class ArtController {
      */
     public void viewShapes(GraphicsContext graphics) {
 
-        for (IShape shape : shapeList) {
+        for (IShapeFacade shape : shapeList) {
             shape.viewShape(graphics);
         }
     }
@@ -95,5 +96,6 @@ public class ArtController {
      */
     public void clearShapeList() {
         shapeList.clear();
+        tempShapeList.clear();
     }
 }

@@ -1,6 +1,6 @@
 package view;
 
-import controller.ArtController;
+import controller.ArtControllerFactory;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -47,7 +47,7 @@ public class ArtView extends Application {
     private ColorPicker strokeColorPicker = new ColorPicker();
     private Slider strokeSlider;
     private CheckBox filledCheckbox;
-    private ArtController controller = new ArtController();
+    private ArtControllerFactory controller = new ArtControllerFactory();
     private GraphicsContext graphics;
     private ArrayList<Point> point = new ArrayList<>();
 
