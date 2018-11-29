@@ -32,18 +32,6 @@ public class Rectangle implements IShapeFacade {
      * views the Rectangle shape using a width and height
      */
     public void viewShape(GraphicsContext graphics) {
-        double x = point1.getX();
-        double y = point1.getY();
-        double width = point2.getX() - x;
-        double height = point2.getY() - y;
-
-        graphics.setFill(fillColor);
-        graphics.setStroke(strokeColor);
-        graphics.setLineWidth(strokeWidth);
-        graphics.strokeRect(x, y, width, height);
-
-        if (filled) {
-            graphics.fillRect(x, y, width, height);
-        }
+        GraphicsFacade.viewRect(graphics, point1, point2, fillColor, strokeColor, strokeWidth, filled);
     }
 }

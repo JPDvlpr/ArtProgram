@@ -22,7 +22,7 @@ public class Point {
     /**
      * gets the y coord as a double value
      */
-     double getY() {
+    double getY() {
         return y;
     }
 }

@@ -34,21 +34,7 @@ public class Oval implements IShapeFacade {
      */
     @Override
     public void viewShape(GraphicsContext graphics) {
-        double x = point1.getX();
-        double y = point1.getY();
-        double width = point2.getX() - x;
-        double height = point2.getY() - y;
+        GraphicsFacade.viewOval(graphics, point1, point2, fillColor, strokeColor, strokeWidth, filled);
 
-        graphics.setFill(fillColor);
-        graphics.setStroke(strokeColor);
-        graphics.setLineWidth(strokeWidth);
-
-        
-
-        graphics.strokeOval(x, y, width, height);
-
-        if (filled) {
-            graphics.fillOval(x, y, width, height);
-        }
     }
 }

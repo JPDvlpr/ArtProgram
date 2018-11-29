@@ -29,13 +29,7 @@ public class Line implements IShapeFacade {
      */
     @Override
     public void viewShape(GraphicsContext graphics) {
-        double x = point1.getX();
-        double y = point1.getY();
-        double x2 = point2.getX();
-        double y2 = point2.getY();
+        GraphicsFacade.viewLine(graphics, point1, point2, strokeColor, strokeWidth);
 
-        graphics.setStroke(strokeColor);
-        graphics.setLineWidth(strokeWidth);
-        graphics.strokeLine(x,y,x2,y2);
     }
 }

@@ -11,7 +11,7 @@ import java.util.Stack;
  * Controller that does the work from the view layer
  * to get passed to the model layer
  */
-public class ArtControllerFactory {
+public class ArtController {
 
     private Stack<IShapeFacade> shapeList = new Stack<>();
     private Stack<IShapeFacade> tempShapeList = new Stack<>();
@@ -22,38 +22,13 @@ public class ArtControllerFactory {
     public void handleAddShape(String text, ArrayList<Point> pointList, Color fillColor,
                                Color strokeColor, double strokeWidth, boolean filled) {
         tempShapeList.clear();
-        Point[] point = new Point[pointList.size()];
-
-        for (int i = 0; i < pointList.size(); i++) {
-            point[i] = pointList.get(i);
-        }
-        switch (text) {
-            case "Oval":
-                IShapeFacade oval = new Oval(point[0], point[point.length - 1], fillColor, strokeColor, strokeWidth, filled);
-                shapeList.add(oval);
-                break;
-            case "Line":
-                IShapeFacade line = new Line(point[0], point[point.length - 1], strokeColor, strokeWidth);
-                shapeList.add(line);
-                break;
-            case "Rectangle":
-                IShapeFacade rectangle = new Rectangle(point[0], point[point.length - 1], fillColor, strokeColor, strokeWidth, filled);
-                shapeList.add(rectangle);
-                break;
-            case "Squiggle":
-                IShapeFacade squiggle = new Squiggle(point, fillColor, strokeColor, strokeWidth, filled);
-                shapeList.add(squiggle);
-                break;
-            default:
-                break;
-        }
+        shapeList.add(ShapeFactory.getShape(text, pointList, fillColor, strokeColor, strokeWidth, filled));
     }
 
     /**
      * displays all shapes to the graphics
      */
     public void viewShapes(GraphicsContext graphics) {
-
         for (IShapeFacade shape : shapeList) {
             shape.viewShape(graphics);
         }

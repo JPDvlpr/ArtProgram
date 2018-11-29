@@ -32,22 +32,7 @@ public class Squiggle implements IShapeFacade {
      */
     @Override
     public void viewShape(GraphicsContext graphics) {
-        double[] xCoords = new double[point.length];
-        double[] yCoords = new double[point.length];
+        GraphicsFacade.viewSquiggle(graphics, point, fillColor, strokeColor, strokeWidth, filled);
 
-        graphics.setFill(fillColor);
-        graphics.setStroke(strokeColor);
-        graphics.setLineWidth(strokeWidth);
-
-        for (int i = 0; i < point.length; i++) {
-            xCoords[i] += point[i].getX();
-            yCoords[i] += point[i].getY();
-        }
-
-        graphics.strokePolyline(xCoords, yCoords, point.length);
-
-        if (filled) {
-            graphics.fillPolygon(xCoords, yCoords, point.length);
-        }
     }
 }
