@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 /**
  * Squiggle is one of four shapes used in this app
  */
-public class Squiggle implements IShapeFacade {
+public class Squiggle implements IShape {
 
     private Color fillColor;
     private Color strokeColor;
@@ -32,7 +32,7 @@ public class Squiggle implements IShapeFacade {
      */
     @Override
     public void viewShape(GraphicsContext graphics) {
-        GraphicsFacade.viewSquiggle(graphics, point, fillColor, strokeColor, strokeWidth, filled);
-
+        GraphicsFacade graphs = new GraphicsFacade();
+        graphs.viewSquiggle(graphics, point, fillColor, strokeColor, strokeWidth, filled);
     }
 }

@@ -2,11 +2,12 @@ package model;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import observer.Observable;
 
 /**
  * facade design class to add shapes
  */
-class GraphicsFacade {
+public class GraphicsFacade extends Observable {
 
     /**
      * adds a new shape that takes in params which is then
@@ -71,8 +72,8 @@ class GraphicsFacade {
      * adds a new shape that takes in params which is then
      * passed into it's shape class within the model layer
      */
-    static void viewSquiggle(GraphicsContext graphics, Point[] point, Color fillColor,
-                             Color strokeColor, double strokeWidth, boolean filled) {
+    void viewSquiggle(GraphicsContext graphics, Point[] point, Color fillColor,
+                      Color strokeColor, double strokeWidth, boolean filled) {
         double[] xCoords = new double[point.length];
         double[] yCoords = new double[point.length];
 
@@ -90,5 +91,12 @@ class GraphicsFacade {
         if (filled) {
             graphics.fillPolygon(xCoords, yCoords, point.length);
         }
+
+        notifyObservers(Change.VIEW);
+
+    }
+
+    public enum Change {
+        VIEW
     }
 }

@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 /**
  * Rectangle is one of four shapes used in this app
  */
-public class Rectangle implements IShapeFacade {
+public class Rectangle implements IShape {
     private Point point1;
     private Point point2;
     private Color fillColor;

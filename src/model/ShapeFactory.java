@@ -9,14 +9,14 @@ import java.util.ArrayList;
  */
 public class ShapeFactory {
     /**
-     * getsShape returns an IShapeFacade and is static
+     * getsShape returns an IShape and is static
      * so it can be called directly in other classes
      */
-    public static IShapeFacade getShape(String text, ArrayList<Point> pointList, Color fillColor,
-                                 Color strokeColor, double strokeWidth, boolean filled){
+    public static IShape getShape(String text, ArrayList<Point> pointList, Color fillColor,
+                                  Color strokeColor, double strokeWidth, boolean filled){
 
         Point[] point = new Point[pointList.size()];
-        IShapeFacade shape = null;
+        IShape shape = null;
 
         for (int i = 0; i < pointList.size(); i++) {
             point[i] = pointList.get(i);

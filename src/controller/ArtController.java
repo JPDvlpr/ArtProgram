@@ -2,7 +2,9 @@ package controller;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import model.*;
+import model.IShape;
+import model.Point;
+import model.ShapeFactory;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -13,11 +15,11 @@ import java.util.Stack;
  */
 public class ArtController {
 
-    private Stack<IShapeFacade> shapeList = new Stack<>();
-    private Stack<IShapeFacade> tempShapeList = new Stack<>();
+    private Stack<IShape> shapeList = new Stack<>();
+    private Stack<IShape> tempShapeList = new Stack<>();
 
     /**
-     * Adds a new shape to a stack of data type IShapeFacade
+     * Adds a new shape to a stack of data type IShape
      */
     public void handleAddShape(String text, ArrayList<Point> pointList, Color fillColor,
                                Color strokeColor, double strokeWidth, boolean filled) {
@@ -29,7 +31,7 @@ public class ArtController {
      * displays all shapes to the graphics
      */
     public void viewShapes(GraphicsContext graphics) {
-        for (IShapeFacade shape : shapeList) {
+        for (IShape shape : shapeList) {
             shape.viewShape(graphics);
         }
     }

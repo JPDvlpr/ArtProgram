@@ -19,7 +19,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.GraphicsFacade;
 import model.Point;
+import observer.IObserver;
+import observer.Observable;
 
 import java.awt.*;
 import java.io.IOException;
@@ -30,7 +33,7 @@ import java.util.ArrayList;
  * Displays the GUI doodle application for
  * the user to interact with.
  */
-public class ArtView extends Application {
+public class ArtView extends Application implements IObserver {
     private static final int WIN_WIDTH = 1000;
     private static final int WIN_HEIGHT = 600;
     private static final int SHAPE_ICON_SIZE = 20;
@@ -50,6 +53,8 @@ public class ArtView extends Application {
     private ArtController controller = new ArtController();
     private GraphicsContext graphics;
     private ArrayList<Point> point = new ArrayList<>();
+    private ListView<Object> shapeList;
+
 
     /**
      * starts the scene and gives default value
@@ -68,6 +73,7 @@ public class ArtView extends Application {
 
     private Scene getPrimaryScene() {
         BorderPane mainPanel = new BorderPane();
+        shapeList = new ListView<>();
 
         VBox top = new VBox();
         top.getChildren().addAll(buildMenu(), getToolbar());
@@ -307,5 +313,16 @@ public class ArtView extends Application {
                 }
             });
         });
+    }
+
+    @Override
+    public void update(Observable observable, Object... args) {
+        GraphicsFacade.Change command = (GraphicsFacade.Change) args[0];
+        switch (command) {
+            case VIEW:
+                GraphicsFacade shape = (GraphicsFacade) args[1];
+                shapeList.getItems().add(shape.toString());
+                break;
+        }
     }
 }

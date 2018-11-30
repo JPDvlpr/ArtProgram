@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 /**
  * Line is one of four shapes used in this app
  */
-public class Line implements IShapeFacade {
+public class Line implements IShape {
     private Color strokeColor;
     private Point point1;
     private Point point2;
