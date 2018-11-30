@@ -4,7 +4,14 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
+/**
+ * Factory design pattern implemented to retrieve the shapes
+ */
 public class ShapeFactory {
+    /**
+     * getsShape returns an IShapeFacade and is static
+     * so it can be called directly in other classes
+     */
     public static IShapeFacade getShape(String text, ArrayList<Point> pointList, Color fillColor,
                                  Color strokeColor, double strokeWidth, boolean filled){
 

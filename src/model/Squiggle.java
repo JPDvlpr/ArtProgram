@@ -18,8 +18,8 @@ public class Squiggle implements IShapeFacade {
      * creating the Squiggle constructor and setting the
      * global vars to be the constructor vars
      */
-    public Squiggle(Point[] point, Color fillColor,
-                    Color strokeColor, double strokeWidth, boolean filled) {
+    Squiggle(Point[] point, Color fillColor,
+             Color strokeColor, double strokeWidth, boolean filled) {
         this.point = point;
         this.fillColor = fillColor;
         this.strokeColor = strokeColor;

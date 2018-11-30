@@ -16,7 +16,7 @@ public class Line implements IShapeFacade {
      * creating the Line constructor and setting the
      * global vars to be the constructor vars
      */
-    public Line(Point point1, Point point2, Color strokeColor, double strokeWidth) {
+    Line(Point point1, Point point2, Color strokeColor, double strokeWidth) {
         this.point1 = point1;
         this.point2 = point2;
         this.strokeColor = strokeColor;

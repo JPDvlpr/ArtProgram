@@ -18,8 +18,8 @@ public class Rectangle implements IShapeFacade {
      * creating the Rectangle constructor and setting the
      * global vars to be the constructor vars
      */
-    public Rectangle(Point point1, Point point2, Color fillColor, Color strokeColor,
-                     double strokeWidth, boolean filled) {
+    Rectangle(Point point1, Point point2, Color fillColor, Color strokeColor,
+              double strokeWidth, boolean filled) {
         this.point1 = point1;
         this.point2 = point2;
         this.fillColor = fillColor;

@@ -3,10 +3,17 @@ package model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class GraphicsFacade {
+/**
+ * facade design class to add shapes
+ */
+class GraphicsFacade {
 
-    public static void viewLine(GraphicsContext graphics, Point point1, Point point2,
-                                Color strokeColor, double strokeWidth) {
+    /**
+     * adds a new shape that takes in params which is then
+     * passed into it's shape class within the model layer
+     */
+    static void viewLine(GraphicsContext graphics, Point point1, Point point2,
+                         Color strokeColor, double strokeWidth) {
         double x = point1.getX();
         double y = point1.getY();
         double x2 = point2.getX();
@@ -17,8 +24,12 @@ public class GraphicsFacade {
         graphics.strokeLine(x, y, x2, y2);
     }
 
-    public static void viewOval(GraphicsContext graphics, Point point1, Point point2, Color fillColor,
-                                Color strokeColor, double strokeWidth, boolean filled) {
+    /**
+     * adds a new shape that takes in params which is then
+     * passed into it's shape class within the model layer
+     */
+    static void viewOval(GraphicsContext graphics, Point point1, Point point2, Color fillColor,
+                         Color strokeColor, double strokeWidth, boolean filled) {
         double x = point1.getX();
         double y = point1.getY();
         double width = point2.getX() - x;
@@ -35,8 +46,12 @@ public class GraphicsFacade {
         }
     }
 
-    public static void viewRect(GraphicsContext graphics, Point point1, Point point2, Color fillColor,
-                                Color strokeColor, double strokeWidth, boolean filled) {
+    /**
+     * adds a new shape that takes in params which is then
+     * passed into it's shape class within the model layer
+     */
+    static void viewRect(GraphicsContext graphics, Point point1, Point point2, Color fillColor,
+                         Color strokeColor, double strokeWidth, boolean filled) {
         double x = point1.getX();
         double y = point1.getY();
         double width = point2.getX() - x;
@@ -52,8 +67,12 @@ public class GraphicsFacade {
         }
     }
 
-    public static void viewSquiggle(GraphicsContext graphics, Point[] point, Color fillColor,
-                                    Color strokeColor, double strokeWidth, boolean filled) {
+    /**
+     * adds a new shape that takes in params which is then
+     * passed into it's shape class within the model layer
+     */
+    static void viewSquiggle(GraphicsContext graphics, Point[] point, Color fillColor,
+                             Color strokeColor, double strokeWidth, boolean filled) {
         double[] xCoords = new double[point.length];
         double[] yCoords = new double[point.length];
 

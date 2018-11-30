@@ -18,8 +18,8 @@ public class Oval implements IShapeFacade {
      * creating the Oval constructor and setting the
      * global vars to be the constructor vars
      */
-    public Oval(Point point1, Point point2, Color fillColor,
-                Color strokeColor, double strokeWidth, boolean filled) {
+    Oval(Point point1, Point point2, Color fillColor,
+         Color strokeColor, double strokeWidth, boolean filled) {
         this.point1 = point1;
         this.point2 = point2;
         this.fillColor = fillColor;
